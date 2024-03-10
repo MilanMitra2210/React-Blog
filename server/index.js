@@ -13,7 +13,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/blogs', (req, res) => {
-  res.send(blogs)
+  setTimeout(() => {
+    res.send(blogs);
+  }, 3000);
 })
 app.get('/blogs/:id', (req, res) => {
   const id = parseInt(req.params.id);

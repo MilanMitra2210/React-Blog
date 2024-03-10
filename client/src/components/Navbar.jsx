@@ -79,7 +79,7 @@ const Navbar = () => {
                       isActive
                         ? "active"
                         : ""
-                    } onClick={toggleMenu} exact to={path}>
+                    } onClick={toggleMenu} to={path}>
                 {link}
               </NavLink>
             </li>
