@@ -4,12 +4,15 @@ import { NavLink } from "react-router-dom";
 // react-icons
 import { FaFacebook, FaTwitter, FaInstagram, FaBars } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
+import Modal from "./Modal";
 
 const Navbar = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const toggleMenu = () =>{
-        setIsMenuOpen(!isMenuOpen);
-    }
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  }
   //navItems
   const navItems = [
     { path: "/", link: "Home" },
@@ -18,6 +21,14 @@ const Navbar = () => {
     { path: "/blogs", link: "Blogs" },
     { path: "/contact-us", link: "Contact" },
   ];
+
+  //modal details
+  const openModal = () => {
+    setIsModalOpen(true);  
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);  
+  }
 
   return (
     <header className="bg-black text-white fixed top-0 left-0 right-0">
@@ -30,10 +41,10 @@ const Navbar = () => {
           {navItems.map(({ path, link }) => (
             <li className="hover:text-blue-300" key={path}>
               <NavLink className={({ isActive }) =>
-                      isActive
-                        ? "active"
-                        : ""
-                    } to={path}>{link}</NavLink>
+                isActive
+                  ? "active"
+                  : ""
+              } to={path}>{link}</NavLink>
             </li>
           ))}
         </ul>
@@ -48,10 +59,13 @@ const Navbar = () => {
           <a href="/" className="hover:text-blue-500">
             <FaInstagram />
           </a>
-          <button className="bg-blue-500 px-6 py-2 font-medium rounded hover:bg-white hover:text-blue-500 transition-all duration-200 ease-in">
+          <button onClick={openModal} className="bg-blue-500 px-6 py-2 font-medium rounded hover:bg-white hover:text-blue-500 transition-all duration-200 ease-in">
             Log In
           </button>
         </div>
+
+        {/* modal compoent is here */}
+        <Modal isOpen={isModalOpen} onClose={closeModal}/>
 
         {/* mobile menu btn */}
         <div className="md:hidden">
@@ -67,19 +81,18 @@ const Navbar = () => {
       {/* menu items only for mobile */}
       <div>
         <ul
-          className={`md:hidden gap-12 text-lg block space-y-4 px-4 py-4 mt-14 bg-white text-black ${
-            isMenuOpen
+          className={`md:hidden gap-12 text-lg block space-y-4 px-4 py-4 mt-14 bg-white text-black ${isMenuOpen
               ? "fixed top-0 left-0 right-0 w-full transition-all ease-out duration-150"
               : "hidden"
-          }`}
+            }`}
         >
           {navItems.map(({ path, link }) => (
             <li className="hover:text-blue-300" key={path}>
               <NavLink className={({ isActive }) =>
-                      isActive
-                        ? "active"
-                        : ""
-                    } onClick={toggleMenu} to={path}>
+                isActive
+                  ? "active"
+                  : ""
+              } onClick={toggleMenu} to={path}>
                 {link}
               </NavLink>
             </li>
