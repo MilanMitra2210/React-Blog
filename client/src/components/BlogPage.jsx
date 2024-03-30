@@ -1,5 +1,6 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import Pagination from "./Pagination";
+import CategorySelection from "./CategorySelection";
 const LazyBlogCard = lazy(() => import("./BlogCard"));
 
 const BlogPage = () => {
@@ -13,7 +14,7 @@ const BlogPage = () => {
     async function fetchBlogs() {
       let url = `${import.meta.env.VITE_REACT_APP_API_URL}blogs?page${currentPage}&limit${pageSize}`;
       // filter by category
-      if(selectedCategory){
+      if (selectedCategory) {
         url += `&category${selectedCategory}`
       }
       const response = await fetch(url);
@@ -28,29 +29,31 @@ const BlogPage = () => {
     setCurrentPage(pageNumber);
   }
 
-  const handleCategoryChange = (category) =>{
+  const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setCurrentPage(1);
     setActiveCategory(category);
   }
   const filteredBlogs = blogs
-  .filter((blogs) => !selectedCategory || blogs.category === selectedCategory)
-  .slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    .filter((blogs) => !selectedCategory || blogs.category === selectedCategory)
+    .slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   return (
-    <div className="container mx-auto px-4 py-8"> 
-    {/* category section */}
-      <div>Page Category</div>
+    <div className="container mx-auto px-4 py-8">
+      {/* category section */}
+      <div>
+        <CategorySelection onSelectCategory={handleCategoryChange} selectedCategory={selectedCategory} activeCategory={activeCategory}/>
+      </div>
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
         <Suspense fallback={<div>Loading...</div>}>
           {filteredBlogs.map((blog) => (
-            <LazyBlogCard key={blog.id} blog={blog}/>
+            <LazyBlogCard key={blog.id} blog={blog} />
           ))}
         </Suspense>
       </div>
       {/* pagination */}
       <div>
-        <Pagination onPageChange={handlePageChange} currentPage={currentPage} blogs={blogs} pageSize={pageSize}/>
+        <Pagination onPageChange={handlePageChange} currentPage={currentPage} blogs={blogs} pageSize={pageSize} />
       </div>
     </div>
   );
