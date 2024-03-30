@@ -1,6 +1,7 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import Pagination from "./Pagination";
 import CategorySelection from "./CategorySelection";
+import SideBar from "./SideBar";
 const LazyBlogCard = lazy(() => import("./BlogCard"));
 
 const BlogPage = () => {
@@ -9,6 +10,7 @@ const BlogPage = () => {
   const pageSize = 12; //blogs per page
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
+  const [totalBlogs, setTotalBlogs] = useState();
 
   useEffect(() => {
     async function fetchBlogs() {
@@ -19,6 +21,7 @@ const BlogPage = () => {
       }
       const response = await fetch(url);
       const data = await response.json();
+      setTotalBlogs(data?.length);
       setBlogs(data);
     }
     fetchBlogs();
@@ -44,16 +47,22 @@ const BlogPage = () => {
       <div>
         <CategorySelection onSelectCategory={handleCategoryChange} selectedCategory={selectedCategory} activeCategory={activeCategory}/>
       </div>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
-        <Suspense fallback={<div>Loading...</div>}>
-          {filteredBlogs.map((blog) => (
-            <LazyBlogCard key={blog.id} blog={blog} />
-          ))}
-        </Suspense>
+      <div className="flex flex-col lg:flex-row gap-12">
+        <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
+          <Suspense fallback={<div>Loading...</div>}>
+            {filteredBlogs.map((blog) => (
+              <LazyBlogCard key={blog.id} blog={blog} />
+            ))}
+          </Suspense>
+        </div>
+        <div>
+          {/* sidebar component */}
+          <SideBar/>
+        </div>
       </div>
       {/* pagination */}
       <div>
-        <Pagination onPageChange={handlePageChange} currentPage={currentPage} blogs={blogs} pageSize={pageSize} />
+        <Pagination onPageChange={handlePageChange} currentPage={currentPage} blogs={blogs} pageSize={pageSize} totalBlogs={totalBlogs}/>
       </div>
     </div>
   );
