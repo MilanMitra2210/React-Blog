@@ -7,6 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import PageNotFound from './pages/PageNotFound.jsx';
+import SingleBlog from './pages/SingleBlog.jsx';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
 const Blogs = lazy(() => import('./pages/Blogs.jsx'));
@@ -36,6 +37,11 @@ const router = createBrowserRouter([
         path: "/services",
         element:<Services/>
       }, 
+      {
+        path: "/blogs/:id",
+        element:<SingleBlog/>,
+        loader: ({params}) => fetch(`${import.meta.env.VITE_REACT_APP_API_URL}blogs/${params.id}`)
+      },
       {
         path: "/contact-us",
         element:<Contact/>

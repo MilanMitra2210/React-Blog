@@ -2,10 +2,10 @@ import React from "react";
 import {  FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const BlogCard = ({ blog }) => {
+const BlogCard = ({ blog, fromHome }) => {
 
   return (
-    <Link className="p-5 shadow-lg rounded cursor-pointer hover:shadow-2xl" to={`/${blog.id}`}>
+    <Link className="p-5 shadow-lg rounded cursor-pointer hover:shadow-2xl" to={fromHome ? `blogs/${blog.id}` : `${blog.id}`}>
       <div>
         <img src={blog.image} alt="" className="w-full" />
       </div>

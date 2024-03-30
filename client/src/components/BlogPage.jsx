@@ -4,7 +4,7 @@ import CategorySelection from "./CategorySelection";
 import SideBar from "./SideBar";
 const LazyBlogCard = lazy(() => import("./BlogCard"));
 
-const BlogPage = () => {
+const BlogPage = ({ fromHome = false }) => {
   const [blogs, setBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 12; //blogs per page
@@ -45,24 +45,24 @@ const BlogPage = () => {
     <div className="container mx-auto px-4 py-8">
       {/* category section */}
       <div>
-        <CategorySelection onSelectCategory={handleCategoryChange} selectedCategory={selectedCategory} activeCategory={activeCategory}/>
+        <CategorySelection onSelectCategory={handleCategoryChange} selectedCategory={selectedCategory} activeCategory={activeCategory} />
       </div>
       <div className="flex flex-col lg:flex-row gap-12">
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
           <Suspense fallback={<div>Loading...</div>}>
             {filteredBlogs.map((blog) => (
-              <LazyBlogCard key={blog.id} blog={blog} />
+              <LazyBlogCard key={blog.id} blog={blog} fromHome={fromHome}/>
             ))}
           </Suspense>
         </div>
         <div>
           {/* sidebar component */}
-          <SideBar/>
+          <SideBar />
         </div>
       </div>
       {/* pagination */}
       <div>
-        <Pagination onPageChange={handlePageChange} currentPage={currentPage} blogs={blogs} pageSize={pageSize} totalBlogs={totalBlogs}/>
+        <Pagination onPageChange={handlePageChange} currentPage={currentPage} blogs={blogs} pageSize={pageSize} totalBlogs={totalBlogs} />
       </div>
     </div>
   );

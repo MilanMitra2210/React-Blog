@@ -7,7 +7,7 @@ const Home = () => {
     <div>
       <Banner/>
       <div className='max-w-7xl mx-auto'>
-        <BlogPage/>
+        <BlogPage fromHome={true}/>
       </div>
     </div>
   )
