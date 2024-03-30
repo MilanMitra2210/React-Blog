@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const BlogCard = ({ blog }) => {
 
   return (
-    <Link className="p-5 shadow-lg rounded cursor-pointer hover:shadow-2xl">
+    <Link className="p-5 shadow-lg rounded cursor-pointer hover:shadow-2xl" to={`/${blog.id}`}>
       <div>
         <img src={blog.image} alt="" className="w-full" />
       </div>

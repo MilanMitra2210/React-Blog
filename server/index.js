@@ -2,7 +2,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const blogs = require('./api/blogsData.json')
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3001;
+
 
 // middleware
 app.use(cors())
@@ -13,12 +14,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/blogs', (req, res) => {
-  setTimeout(() => {
     res.send(blogs);
-  }, 3000);
 })
 app.get('/blogs/:id', (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = parseInt(req.params.id); 
   // console.log(id)
   const blog = blogs.filter(b => b.id === id);
   // console.log(blog)

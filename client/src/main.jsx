@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import PageNotFound from './pages/PageNotFound.jsx';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
 const Blogs = lazy(() => import('./pages/Blogs.jsx'));
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/contact-us",
         element:<Contact/>
+      },
+      {
+        path: "*",
+        element:<PageNotFound/>
       }
     ]
   },
