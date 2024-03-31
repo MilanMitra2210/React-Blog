@@ -3,6 +3,7 @@ import { FaUser } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa6';
 import { useLoaderData } from 'react-router-dom'
 import SideBar from '../components/SideBar';
+import Banner from '../components/Banner';
 
 const SingleBlog = () => {
     const data = useLoaderData();
@@ -10,11 +11,7 @@ const SingleBlog = () => {
     console.log(data);
     return (
         <div>
-            <div className="py-40 bg-black text-center text-white px-4">
-                <h1 className="text-5xl lg:text-7xl leading-snug font-bold mb-5">
-                    SingleBlog Page
-                </h1>
-            </div>
+            <Banner/>
             {/* blog details */}
             <div className='max-w-7xl mx-auto my-12 flex flex-col md:flex-row gap-12'>
                 <div className='lg:w-3/4 p-8 mx-auto'>
